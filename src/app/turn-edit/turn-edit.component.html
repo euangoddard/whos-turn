@@ -1,0 +1,37 @@
+<form class="flex flex-col" [formGroup]="form" (submit)="saveTurn()">
+  <mat-form-field class="mb-4">
+    <input matInput placeholder="Label" formControlName="label" autocomplete="off" />
+  </mat-form-field>
+
+  <label id="icon-label">Pick an icon</label>
+  <mat-radio-group aria-labelledby="icon-label" class="mb-8" formControlName="icon">
+    <mat-radio-button [value]="icon" *ngFor="let icon of icons" class="mr-4"
+      >
+      <mat-icon>{{ icon }}</mat-icon>
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <label id="candidates-label">Set candidates</label>
+  <mat-form-field>
+    <mat-chip-list #chipList aria-labelledby="candidates-label">
+      <mat-chip
+        *ngFor="let candidate of form.get('candidates').value"
+        [removable]="true"
+        (removed)="remove(candidate)"
+      >
+        {{ candidate }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input
+        matInput
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="true"
+        (matChipInputTokenEnd)="add($event)"
+        autocomplete="off"
+      />
+    </mat-chip-list>
+  </mat-form-field>
+
+  <button type="submit" mat-raised-button color="primary" class="self-start">Save</button>
+</form>

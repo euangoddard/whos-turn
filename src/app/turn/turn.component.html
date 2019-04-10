@@ -1,0 +1,22 @@
+<header class="mat-display-4 flex items-center">
+  <mat-icon [inline]="true" class="pr-6" color="primary">{{ turn.icon }}</mat-icon> {{ turn.label }}
+</header>
+<div class="pb-8">
+  <mat-divider></mat-divider>
+</div>
+<mat-chip-list>
+  <label class="mr-4">Candidates</label>
+  <mat-chip
+    *ngFor="let candidate of turn.candidates; index as index"
+    [color]="index === turn.currentIndex ? 'accent' : null"
+    >{{ candidate }}</mat-chip
+  >
+</mat-chip-list>
+<div class="pt-8 pb-8">
+  <mat-divider></mat-divider>
+</div>
+
+<div class="mat-display-3 flex flex-col items-center">
+  <div class="mb-4">{{ currentCandidate }} is up next!</div>
+  <button type="button" mat-raised-button color="primary" (click)="moveToNext()">{{ currentCandidate }} has had turn</button>
+</div>
