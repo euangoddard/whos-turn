@@ -5,3 +5,6 @@ export interface Turn {
   candidates: ReadonlyArray<string>;
   currentIndex: number;
 }
+
+
+export type Turns = ReadonlyArray<Turn>;

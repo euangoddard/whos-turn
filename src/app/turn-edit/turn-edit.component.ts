@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import * as shortid from 'shortid';
@@ -69,9 +69,9 @@ export class TurnEditComponent implements OnInit, OnDestroy {
 
   turn: Turn = {
     id: shortid.generate(),
-    label: null,
+    label: '',
     candidates: ['Eric'],
-    icon: null,
+    icon: '',
     currentIndex: 0,
   };
 
@@ -96,7 +96,7 @@ export class TurnEditComponent implements OnInit, OnDestroy {
     const value = event.value;
 
     if ((value || '').trim()) {
-      const control = this.form.get('candidates');
+      const control = this.form.get('candidates') as AbstractControl;
       control.setValue([...control.value, value.trim()]);
     }
 
@@ -107,8 +107,8 @@ export class TurnEditComponent implements OnInit, OnDestroy {
   }
 
   remove(candidate: string): void {
-    const control = this.form.get('candidates');
-    control.setValue(control.value.filter(c => c !== candidate));
+    const control = this.form.get('candidates') as AbstractControl;
+    control.setValue(control.value.filter((c: string) => c !== candidate));
   }
 
   saveTurn() {
