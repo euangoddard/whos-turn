@@ -1,6 +1,6 @@
 import { createAction, props, union } from '@ngrx/store';
 import { TypedAction } from '@ngrx/store/src/models';
-import { Turn, Turns } from 'src/app/turn/turn.model';
+import { Turn, Turns } from 'src/app/turn.model';
 
 const TURN_NAMESPACE = '[Turns] ';
 

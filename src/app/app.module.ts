@@ -15,13 +15,17 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { APP_ROUTES } from 'src/app/app.routes';
+import { AliasDirective } from 'src/app/directives/alias.directive';
+import { ICONS, Icons } from 'src/app/icons';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { AppEffects } from './app.effects';
+import { HomeComponent } from './components/home/home.component';
 import { metaReducers, reducers } from './reducers';
-import { TurnEditComponent } from './turn-edit/turn-edit.component';
-import { TurnComponent } from './turn/turn.component';
+import { TurnEditComponent } from './components/turn-edit/turn-edit.component';
+import { TurnComponent } from './components/turn/turn.component';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -38,7 +42,7 @@ const MATERIAL_MODULES = [
 const CDK_MODULES = [LayoutModule];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, TurnComponent, TurnEditComponent],
+  declarations: [AppComponent, AliasDirective, HomeComponent, TurnComponent, TurnEditComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -48,8 +52,14 @@ const CDK_MODULES = [LayoutModule];
     StoreModule.forRoot(reducers, { metaReducers }),
     RouterModule.forRoot(APP_ROUTES),
     MatListModule,
+    EffectsModule.forRoot([AppEffects]),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: Icons,
+      useValue: ICONS,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

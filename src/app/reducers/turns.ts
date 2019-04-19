@@ -12,7 +12,7 @@ import {
   TurnsAction,
 } from 'src/app/actions';
 import { ItemsById } from 'src/app/reducers/models';
-import { Turn } from 'src/app/turn/turn.model';
+import { Turn } from 'src/app/turn.model';
 
 export interface TurnsState {
   turns: ItemsById<Turn>;

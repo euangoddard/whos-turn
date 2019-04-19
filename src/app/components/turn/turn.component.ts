@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import * as shortid from 'shortid';
-import { Turn } from 'src/app/turn/turn.model';
+import { Turn } from 'src/app/turn.model';
 
 @Component({
   selector: 'wt-turn',

@@ -9,23 +9,8 @@ import {
   saveTurnSuccess,
 } from 'src/app/actions';
 import { initialState, turnsReducer, TurnsState } from 'src/app/reducers/turns';
-import { Turn } from 'src/app/turn/turn.model';
-
-const STUB_TURN_A: Turn = {
-  id: 'aaaaaa',
-  label: 'Turn A',
-  candidates: ['X', 'Y'],
-  currentIndex: 0,
-  icon: 'icon',
-};
-
-const STUB_TURN_B: Turn = {
-  id: 'bbbbbb',
-  label: 'Turn B',
-  candidates: [],
-  currentIndex: 0,
-  icon: 'icon',
-};
+import { STUB_TURN_A, STUB_TURN_B } from 'src/app/testing/fixtures';
+import { Turn } from 'src/app/turn.model';
 
 describe('Turns reducer', () => {
   it('should return the initial state', () => {
