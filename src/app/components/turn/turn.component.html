@@ -1,22 +1,44 @@
-<header class="mat-display-4 flex items-center">
-  <mat-icon [inline]="true" class="pr-6" color="primary">{{ turn.icon }}</mat-icon> {{ turn.label }}
-</header>
-<div class="pb-8">
-  <mat-divider></mat-divider>
-</div>
-<mat-chip-list>
-  <label class="mr-4">Candidates</label>
-  <mat-chip
-    *ngFor="let candidate of turn.candidates; index as index"
-    [color]="index === turn.currentIndex ? 'accent' : null"
-    >{{ candidate }}</mat-chip
-  >
-</mat-chip-list>
-<div class="pt-8 pb-8">
-  <mat-divider></mat-divider>
-</div>
+<div class="relative">
+  <header class="mat-display-4 flex items-center">
+    <mat-icon [inline]="true" class="pr-6" color="primary">{{ turn.icon }}</mat-icon>
+    {{ turn.label }}
+  </header>
+  <div class="pb-8">
+    <mat-divider></mat-divider>
+  </div>
+  <mat-chip-list>
+    <label class="mr-4">Candidates</label>
+    <mat-chip
+      *ngFor="let candidate of turn.candidates; index as index"
+      [color]="index === turn.currentIndex ? 'accent' : null"
+      >{{ candidate }}</mat-chip
+    >
+    <ng-container *ngIf="!turn.candidates.length">
+      <i>No candidates yet</i> <a mat-button color="accent" routerLink="./edit">Add</a>
+    </ng-container>
+  </mat-chip-list>
+  <div class="pt-8 pb-8">
+    <mat-divider></mat-divider>
+  </div>
 
-<div class="mat-display-3 flex flex-col items-center">
-  <div class="mb-4">{{ currentCandidate }} is up next!</div>
-  <button type="button" mat-raised-button color="primary" (click)="moveToNext()">{{ currentCandidate }} has had turn</button>
+  <div class="mat-display-3 flex flex-col items-center" *ngIf="turn.candidates.length">
+    <div class="mb-4">{{ currentCandidate }} is up next!</div>
+    <button type="button" mat-raised-button color="primary" (click)="moveToNext()">
+      {{ currentCandidate }} has had turn
+    </button>
+  </div>
+
+  <nav class="absolute pin-t pin-r z-10">
+    <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+  </nav>
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item routerLink="./edit">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </a>
+    <button mat-menu-item (click)="deleteTurn()">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
 </div>

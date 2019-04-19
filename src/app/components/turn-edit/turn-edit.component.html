@@ -5,8 +5,7 @@
 
   <label id="icon-label">Pick an icon</label>
   <mat-radio-group aria-labelledby="icon-label" class="mb-8" formControlName="icon">
-    <mat-radio-button [value]="icon" *ngFor="let icon of icons" class="mr-4"
-      >
+    <mat-radio-button [value]="icon" *ngFor="let icon of icons" class="mr-4">
       <mat-icon>{{ icon }}</mat-icon>
     </mat-radio-button>
   </mat-radio-group>
@@ -33,5 +32,8 @@
     </mat-chip-list>
   </mat-form-field>
 
-  <button type="submit" mat-raised-button color="primary" class="self-start">Save</button>
+  <div class="self-start">
+    <button type="submit" mat-raised-button color="primary" class="mr-2">Save</button>
+    <a mat-raised-button routerLink=".." class="mr-2">Cancel</a>
+  </div>
 </form>

@@ -7,7 +7,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatListModule,
+  MatListModule, MatMenuModule,
   MatRadioModule,
   MatSidenavModule,
   MatToolbarModule,
@@ -37,6 +37,7 @@ const MATERIAL_MODULES = [
   MatRadioModule,
   MatInputModule,
   MatChipsModule,
+  MatMenuModule,
 ];
 
 const CDK_MODULES = [LayoutModule];
