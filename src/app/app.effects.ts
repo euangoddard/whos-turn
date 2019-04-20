@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, INIT } from '@ngrx/store';
+import { INIT } from '@ngrx/store';
 import { map, mapTo, mergeMap } from 'rxjs/operators';
 import {
-  advanceTurn,
-  advanceTurnSuccess,
   deleteTurn,
   deleteTurnSuccess,
   loadTurns,
@@ -29,11 +27,10 @@ export class AppEffects {
 
   @Effect()
   saveTurns$ = this.actions$.pipe(
-    ofType(saveTurn.type, advanceTurn.type),
+    ofType(saveTurn.type),
     mergeMap(action => {
       const turn = (action as TurnAction).turn;
-      const nextAction = action.type === saveTurn.type ? saveTurnSuccess : advanceTurnSuccess;
-      return this.storage.upsertTurn(turn).pipe(mapTo(nextAction({ turn })));
+      return this.storage.upsertTurn(turn).pipe(mapTo(saveTurnSuccess({ turn })));
     }),
   );
 

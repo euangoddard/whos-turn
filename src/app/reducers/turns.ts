@@ -1,7 +1,5 @@
 import { TypedAction } from '@ngrx/store/src/models';
 import {
-  advanceTurn,
-  advanceTurnSuccess,
   deleteTurn,
   deleteTurnSuccess,
   loadTurns,
@@ -49,19 +47,6 @@ export function turnsReducer(
         ...state,
         isSaving: false,
         turns: { ...state.turns, [turnSaved.id]: turnSaved },
-      };
-      break;
-    case advanceTurn.type:
-      nextState = { ...state, isSaving: true };
-      break;
-    case advanceTurnSuccess.type:
-      const turnToAdvance = state.turns[(action as TurnAction).turn.id];
-      const nextIndex = (turnToAdvance.currentIndex + 1) % turnToAdvance.candidates.length;
-      const turnAdvanced = { ...turnToAdvance, currentIndex: nextIndex };
-      nextState = {
-        ...state,
-        isSaving: false,
-        turns: { ...state.turns, [turnAdvanced.id]: turnAdvanced },
       };
       break;
     case deleteTurn.type:

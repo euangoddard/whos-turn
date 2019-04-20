@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { mergeMap, pluck } from 'rxjs/operators';
-import { advanceTurn, deleteTurn } from 'src/app/actions';
+import { deleteTurn, saveTurn } from 'src/app/actions';
 import { State } from 'src/app/reducers';
 import { selectTurnById } from 'src/app/selectors';
 import { Turn } from 'src/app/turn.model';
@@ -37,11 +37,12 @@ export class TurnComponent implements OnInit, OnDestroy {
   }
 
   moveToNext(): void {
-    this.store.dispatch(advanceTurn({ turn: this.turn }));
+    const nextIndex = (this.turn.currentIndex + 1) % this.turn.candidates.length;
+    this.store.dispatch(saveTurn({ turn: { ...this.turn, currentIndex: nextIndex } }));
   }
 
   deleteTurn(): void {
-    this.store.dispatch(deleteTurn({turn: this.turn}));
+    this.store.dispatch(deleteTurn({ turn: this.turn }));
     this.router.navigate(['/']);
   }
 }

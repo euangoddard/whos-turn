@@ -1,6 +1,4 @@
 import {
-  advanceTurn,
-  advanceTurnSuccess,
   deleteTurn,
   deleteTurnSuccess,
   loadTurns,
@@ -8,7 +6,7 @@ import {
   saveTurn,
   saveTurnSuccess,
 } from 'src/app/actions';
-import { initialState, turnsReducer, TurnsState } from 'src/app/reducers/turns';
+import { initialState, turnsReducer } from 'src/app/reducers/turns';
 import { STUB_TURN_A, STUB_TURN_B } from 'src/app/testing/fixtures';
 import { Turn } from 'src/app/turn.model';
 
@@ -54,37 +52,6 @@ describe('Turns reducer', () => {
     const state = turnsReducer(preSaveState, saveTurnSuccess({ turn: turnToSave }));
     const updatedTurns = { [STUB_TURN_A.id]: turnToSave, [STUB_TURN_B.id]: STUB_TURN_B };
     expect(state).toEqual({ ...preSaveState, isSaving: false, turns: updatedTurns });
-  });
-
-  it('should handle the advanceTurn action', () => {
-    const prevState: TurnsState = {
-      ...initialState,
-      turns: { [STUB_TURN_A.id]: STUB_TURN_A },
-    };
-    const state = turnsReducer(prevState, advanceTurn({ turn: STUB_TURN_A }));
-    expect(state).toEqual({ ...prevState, isSaving: true });
-  });
-
-  it('should handle the advanceTurnSuccess action', () => {
-    const prevState: TurnsState = {
-      ...initialState,
-      turns: { [STUB_TURN_A.id]: STUB_TURN_A },
-      isSaving: true,
-    };
-    const state = turnsReducer(prevState, advanceTurnSuccess({ turn: STUB_TURN_A }));
-    const turnAdvanced: Turn = { ...STUB_TURN_A, currentIndex: 1 };
-    expect(state).toEqual({
-      ...prevState,
-      isSaving: false,
-      turns: { [STUB_TURN_A.id]: turnAdvanced },
-    });
-
-    // Check that we go back to the start
-    const stateUpdated = turnsReducer(
-      turnsReducer(state, advanceTurn({ turn: turnAdvanced })),
-      advanceTurnSuccess({ turn: turnAdvanced }),
-    );
-    expect(stateUpdated.turns).toEqual({ [STUB_TURN_A.id]: STUB_TURN_A });
   });
 
   it('should handle the deleteTurn action', () => {
