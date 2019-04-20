@@ -14,7 +14,7 @@
   <mat-form-field>
     <mat-chip-list #chipList aria-labelledby="candidates-label">
       <mat-chip
-        *ngFor="let candidate of form.get('candidates').value"
+        *ngFor="let candidate of form.get('candidates')?.value"
         [removable]="true"
         (removed)="remove(candidate)"
       >

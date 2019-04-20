@@ -26,6 +26,8 @@ import { HomeComponent } from './components/home/home.component';
 import { metaReducers, reducers } from './reducers';
 import { TurnEditComponent } from './components/turn-edit/turn-edit.component';
 import { TurnComponent } from './components/turn/turn.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -54,6 +56,7 @@ const CDK_MODULES = [LayoutModule];
     RouterModule.forRoot(APP_ROUTES),
     MatListModule,
     EffectsModule.forRoot([AppEffects]),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     {

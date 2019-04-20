@@ -12,7 +12,7 @@ import { Turn } from 'src/app/turn.model';
 import * as shortid from 'shortid';
 
 @Component({
-  selector: 'app-root',
+  selector: 'whos-turn',
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
