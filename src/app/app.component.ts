@@ -1,5 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
+import { MatDrawer } from '@angular/material';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -45,5 +46,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadTurns());
+  }
+
+  closeOverMenu(drawer: MatDrawer): void {
+    if (drawer.mode === 'over') {
+      drawer.close();
+    }
   }
 }

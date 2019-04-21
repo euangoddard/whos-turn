@@ -7,7 +7,8 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatListModule, MatMenuModule,
+  MatListModule,
+  MatMenuModule,
   MatRadioModule,
   MatSidenavModule,
   MatToolbarModule,
@@ -15,19 +16,19 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { APP_ROUTES } from 'src/app/app.routes';
 import { AliasDirective } from 'src/app/directives/alias.directive';
 import { ICONS, Icons } from 'src/app/icons';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppEffects } from './app.effects';
 import { HomeComponent } from './components/home/home.component';
-import { metaReducers, reducers } from './reducers';
 import { TurnEditComponent } from './components/turn-edit/turn-edit.component';
 import { TurnComponent } from './components/turn/turn.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { metaReducers, reducers } from './reducers';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,

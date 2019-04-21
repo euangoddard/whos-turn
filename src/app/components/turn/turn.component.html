@@ -1,8 +1,8 @@
-<div class="relative">
-  <header class="mat-display-4 flex items-center">
+<div class="relative" *alias="isLargeScreen$ | async as isLargeScreen">
+  <h1 class="mb-8 pr-4 flex items-center" [class.mat-display-4]="isLargeScreen" [class.mat-display-1]="!isLargeScreen">
     <mat-icon [inline]="true" class="pr-6" color="primary">{{ turn.icon }}</mat-icon>
     {{ turn.label }}
-  </header>
+  </h1>
   <div class="pb-8">
     <mat-divider></mat-divider>
   </div>
@@ -28,17 +28,19 @@
     </button>
   </div>
 
-  <nav class="absolute pin-t pin-r z-10">
+  <nav class="absolute pin-t pin-r z-10 -mt-4 -mr-4">
     <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
   </nav>
-  <mat-menu #menu="matMenu">
-    <a mat-menu-item routerLink="./edit">
-      <mat-icon>edit</mat-icon>
-      <span>Edit</span>
-    </a>
-    <button mat-menu-item (click)="deleteTurn()">
-      <mat-icon>delete</mat-icon>
-      <span>Delete</span>
-    </button>
-  </mat-menu>
+
 </div>
+
+<mat-menu #menu="matMenu">
+  <a mat-menu-item routerLink="./edit">
+    <mat-icon>edit</mat-icon>
+    <span>Edit</span>
+  </a>
+  <button mat-menu-item (click)="deleteTurn()">
+    <mat-icon>delete</mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu>
