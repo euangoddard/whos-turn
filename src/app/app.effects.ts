@@ -12,7 +12,7 @@ import {
   TurnAction,
 } from 'src/app/actions';
 import { StorageService } from 'src/app/storage.service';
-import { Turns } from 'src/app/turn.model';
+import { Turn, Turns } from 'src/app/turn.model';
 
 @Injectable()
 export class AppEffects {
@@ -30,7 +30,9 @@ export class AppEffects {
     ofType(saveTurn.type),
     mergeMap(action => {
       const turn = (action as TurnAction).turn;
-      return this.storage.upsertTurn(turn).pipe(mapTo(saveTurnSuccess({ turn })));
+      return this.storage.upsertTurn(turn).pipe(map((turnUpdated: Turn) => {
+        return saveTurnSuccess({ turn: turnUpdated });
+      }));
     }),
   );
 

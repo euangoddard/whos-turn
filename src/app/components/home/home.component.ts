@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { State } from 'src/app/reducers';
+import { selectRecentTurns } from 'src/app/selectors';
+import { Turns } from 'src/app/turn.model';
 
 @Component({
   selector: 'wt-home',
   templateUrl: './home.component.html',
-  styles: []
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  recentTurns$: Observable<Turns> = this.store.pipe(select(selectRecentTurns));
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  constructor(private store: Store<State>) {}
 }

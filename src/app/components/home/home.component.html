@@ -1,3 +1,8 @@
-<p>
-  home works!
-</p>
+<h2>Recent turns</h2>
+<mat-nav-list>
+  <a mat-list-item *ngFor="let turn of recentTurns$ | async" [routerLink]="['/turns', turn.id]">
+    <mat-icon matListIcon>{{ turn.icon }}</mat-icon>
+    <h4 matLine>{{ turn.label }}</h4>
+    <p matLine>{{ turn.timestamp | date : 'medium' }}</p>
+  </a>
+</mat-nav-list>

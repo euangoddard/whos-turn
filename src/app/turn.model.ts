@@ -4,6 +4,7 @@ export interface Turn {
   icon: string;
   candidates: ReadonlyArray<string>;
   currentIndex: number;
+  timestamp?: Date;
 }
 
 

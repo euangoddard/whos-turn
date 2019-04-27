@@ -19,27 +19,34 @@ export class StorageService {
     } catch {
       this.turns = [];
     }
+    for (const turn of this.turns) {
+      if (turn.timestamp) {
+        turn.timestamp = new Date(turn.timestamp);
+      }
+    }
     return of(this.turns);
   }
 
-  upsertTurn(turn: Turn): Observable<null> {
+  upsertTurn(turn: Turn): Observable<Turn> {
+    const turnTimestamped = { ...turn, timestamp: new Date() };
     const hasTurn = this.turns.find(t => t.id === turn.id);
     if (hasTurn) {
-      this.turns = this.turns.map(t => (t.id === turn.id ? turn : t));
+      this.turns = this.turns.map(t => (t.id === turn.id ? turnTimestamped : t));
     } else {
-      this.turns = [...this.turns, turn];
+      this.turns = [...this.turns, turnTimestamped];
     }
-    return this.commitToStorage();
+    this.commitToStorage();
+    return of(turnTimestamped);
   }
 
   deleteTurn(turn: Turn): Observable<null> {
     this.turns = this.turns.filter(t => t.id !== turn.id);
-    return this.commitToStorage();
+    this.commitToStorage();
+    return of(null);
   }
 
-  private commitToStorage(): Observable<null> {
+  private commitToStorage(): void {
     const turnsRaw = JSON.stringify(this.turns);
     localStorage.setItem(StorageService.Key, turnsRaw);
-    return of(null);
   }
 }
