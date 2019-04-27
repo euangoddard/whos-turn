@@ -11,6 +11,7 @@ import {
   MatMenuModule,
   MatRadioModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatToolbarModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
@@ -41,6 +42,7 @@ const MATERIAL_MODULES = [
   MatInputModule,
   MatChipsModule,
   MatMenuModule,
+  MatSnackBarModule,
 ];
 
 const CDK_MODULES = [LayoutModule];

@@ -1,10 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDrawer } from '@angular/material';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MatDrawer, MatSnackBar, MatSnackBarDismiss, MatSnackBarRef } from '@angular/material';
 import { Router } from '@angular/router';
+import { SwUpdate } from '@angular/service-worker';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { from, Observable } from 'rxjs';
+import { map, mergeMap, startWith } from 'rxjs/operators';
 import { loadTurns, saveTurn } from 'src/app/actions';
 import { Icons } from 'src/app/icons';
 import { State } from 'src/app/reducers';
@@ -16,7 +18,7 @@ import * as shortid from 'shortid';
   selector: 'whos-turn',
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   readonly turns$ = this.store.pipe(select(selectTurnsOrdered));
 
   readonly isLargeScreen$: Observable<boolean>;
@@ -26,11 +28,36 @@ export class AppComponent implements OnInit {
     breakpointObserver: BreakpointObserver,
     private store: Store<State>,
     @Inject(Icons) private readonly icons: ReadonlyArray<string>,
+    private updates: SwUpdate,
+    private snackBar: MatSnackBar,
   ) {
     this.isLargeScreen$ = breakpointObserver
       .observe([Breakpoints.HandsetLandscape, Breakpoints.HandsetPortrait])
       .pipe(map(r => !r.matches));
   }
+
+  ngOnInit(): void {
+    this.store.dispatch(loadTurns());
+    this.updates.available
+      .pipe(
+        mergeMap(() => from(this.updates.activateUpdate())),
+        mergeMap(() => {
+          return this.snackBar
+            .open('A new version is available', 'Reload', {
+              duration: 10000,
+            })
+            .afterDismissed();
+        }),
+        untilDestroyed(this),
+      )
+      .subscribe((snackBarRef: MatSnackBarDismiss) => {
+        if (snackBarRef.dismissedByAction) {
+          location.reload();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {}
 
   createNewTurn(): void {
     const turn: Turn = {
@@ -42,10 +69,6 @@ export class AppComponent implements OnInit {
     };
     this.store.dispatch(saveTurn({ turn }));
     this.router.navigate(['/turns', turn.id, 'edit']);
-  }
-
-  ngOnInit(): void {
-    this.store.dispatch(loadTurns());
   }
 
   closeOverMenu(drawer: MatDrawer): void {
