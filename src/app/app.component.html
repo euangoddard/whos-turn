@@ -10,14 +10,18 @@
         <p matLine>Home</p>
       </a>
       <h3 mat-subheader>Turns</h3>
-      <a
-        mat-list-item
-        *ngFor="let turn of turns$ | async"
-        [routerLink]="['/turns', turn.id]"
-        (click)="closeOverMenu(drawer)"
-        ><mat-icon matListIcon>{{ turn.icon }}</mat-icon>
-        <p matLine>{{ turn.label }}</p></a
-      >
+      <ng-container *alias="turns$ | async as turns">
+        <a
+          mat-list-item
+          *ngFor="let turn of turns"
+          [routerLink]="['/turns', turn.id]"
+          (click)="closeOverMenu(drawer)"
+        >
+          <mat-icon matListIcon>{{ turn.icon }}</mat-icon>
+          <p matLine>{{ turn.label }}</p>
+        </a>
+        <mat-list-item role="listitem" *ngIf="!turns.length">No turns yet</mat-list-item>
+      </ng-container>
     </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
